@@ -7,18 +7,16 @@ using System.Threading.Tasks;
 
 namespace Company.Domain.Commands.CreateNewUser
 {
-    public class CreateNewUserHandler : IRequestHandler<CreateNewUserCommand, bool>
+    public class CreateNewUserHandler : IAsyncRequestHandler<CreateNewUserCommand, bool>
     {
-        private readonly IMediator _mediator;
-        public CreateNewUserHandler(IMediator mediator)
+        public CreateNewUserHandler()
         {
-            _mediator = mediator;
         }
 
-        public bool Handle(CreateNewUserCommand message)
-        {
 
-            _mediator.PublishAsync(new UserDoesntExistValidator());
+        Task<bool> IAsyncRequestHandler<CreateNewUserCommand, bool>.Handle(CreateNewUserCommand message)
+        {
+            return Task.FromResult(true);
         }
     }
 }

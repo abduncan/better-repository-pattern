@@ -10,11 +10,8 @@ using System.Threading;
 
 namespace Company.Domain.Commands.CreateNewUser
 {
-    public class UserDoesntExistValidator : AbstractValidator<CreateNewUserCommand>
+    public class CreateNewUserValidator : AbstractValidator<CreateNewUserCommand>
     {
-        public override ValidationResult Validate(CreateNewUserCommand instance)
-        {
-            return base.Validate(instance);
-        }
+        public createnew
     }
 }

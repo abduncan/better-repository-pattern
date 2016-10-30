@@ -1,4 +1,6 @@
 ﻿using Company.Domain.Commands.CreateNewUser;
+using Company.Domain.Infrastructure;
+using FluentValidation;
 using MediatR;
 using SimpleInjector;
 using SimpleInjector.Integration.WebApi;
@@ -30,6 +32,8 @@ namespace Company.API.App_Start
         {
             ConfigureMediator(container);
 
+            container.RegisterCollection(typeof(IValidator<>), GetAssemblies());
+
             container.Verify();
         }
 
@@ -45,6 +49,11 @@ namespace Company.API.App_Start
             container.RegisterSingleton(Console.Out);
             container.RegisterSingleton(new SingleInstanceFactory(container.GetInstance));
             container.RegisterSingleton(new MultiInstanceFactory(container.GetAllInstances));
+
+            container.RegisterDecorator(
+                typeof(IAsyncRequestHandler<,>),
+                typeof(ValidationHandler<,>)
+                );
         }
 
         private static IEnumerable<Assembly> GetAssemblies()

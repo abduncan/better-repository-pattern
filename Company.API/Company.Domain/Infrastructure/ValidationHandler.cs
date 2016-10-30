@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace Company.Domain.Infrastructure
 {
-    public class ValidatorHandler<TAsyncRequest, TResponse>
-        : IAsyncRequestHandler<TAsyncRequest, TResponse> 
+    public class ValidationHandler<TAsyncRequest, TResponse>
+        : IAsyncRequestHandler<TAsyncRequest, TResponse>
         where TAsyncRequest : IAsyncRequest<TResponse>
     {
 
         private readonly IAsyncRequestHandler<TAsyncRequest, TResponse> _inner;
         private readonly IValidator<TAsyncRequest>[] _validators;
 
-        public ValidatorHandler(
+        public ValidationHandler(
             IAsyncRequestHandler<TAsyncRequest, TResponse> inner,
             IValidator<TAsyncRequest>[] validators
             )
@@ -22,11 +22,11 @@ namespace Company.Domain.Infrastructure
             _inner = inner;
             _validators = validators;
         }
-        
+
 
         Task<TResponse> IAsyncRequestHandler<TAsyncRequest, TResponse>.Handle(TAsyncRequest request)
         {
-            var context = new ValidationContext(message);
+            var context = new ValidationContext(request);
 
             var failures = _validators
                 .Select(v => v.Validate(context))
@@ -39,6 +39,7 @@ namespace Company.Domain.Infrastructure
 
             return _inner.Handle(request);
         }
+
     }
 
 }

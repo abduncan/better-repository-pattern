@@ -53,13 +53,10 @@
   <ItemGroup>
     <Compile Include="Commands\CreateNewUser\CreateNewUserCommand.cs" />
     <Compile Include="Commands\CreateNewUser\CreateNewUserHandler.cs" />
-    <Compile Include="Commands\CreateNewUser\UserDoesntExistHandler.cs" />
+    <Compile Include="Commands\CreateNewUser\CreateNewUserValidator.cs" />
     <Compile Include="Commands\CreateNewUser\UserDoesntExistValidator.cs" />
     <Compile Include="Infrastructure\ValidationHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Queries\GetOrderTotal\OrderTotalQuery.cs" />
-    <Compile Include="Queries\GetOrderTotal\OrderTotalHandler.cs" />
-    <Compile Include="Queries\GetOrderTotal\OrderTotalModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.Config" />
@@ -70,6 +67,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Infrastructure\Repository\" />
+    <Folder Include="Queries\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

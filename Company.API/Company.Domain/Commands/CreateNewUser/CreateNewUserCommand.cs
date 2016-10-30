@@ -2,7 +2,7 @@
 
 namespace Company.Domain.Commands.CreateNewUser
 {
-    public class CreateNewUserCommand : IRequest<bool>
+    public class CreateNewUserCommand : IAsyncRequest<bool>
     {
         public string Name { get; set; }
         public string Email { get; set; }
