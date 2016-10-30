@@ -1,12 +1,14 @@
 ﻿using FluentValidation;
 using MediatR;
 using System.Linq;
+using System;
+using System.Threading.Tasks;
 
 namespace Company.Domain.Infrastructure
 {
     public class ValidatorHandler<TAsyncRequest, TResponse>
         : IAsyncRequestHandler<TAsyncRequest, TResponse> 
-        where TAsyncRequest : IRequest<TResponse>
+        where TAsyncRequest : IAsyncRequest<TResponse>
     {
 
         private readonly IAsyncRequestHandler<TAsyncRequest, TResponse> _inner;
@@ -20,8 +22,9 @@ namespace Company.Domain.Infrastructure
             _inner = inner;
             _validators = validators;
         }
+        
 
-        public TResponse Handle(TAsyncRequest request)
+        Task<TResponse> IAsyncRequestHandler<TAsyncRequest, TResponse>.Handle(TAsyncRequest request)
         {
             var context = new ValidationContext(message);
 
