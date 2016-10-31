@@ -1,8 +1,9 @@
-﻿using MediatR;
+﻿using Company.Domain.Models;
+using MediatR;
 
 namespace Company.Domain.Commands.CreateNewUser
 {
-    public class CreateNewUserCommand : IAsyncRequest<bool>
+    public class CreateNewUserCommand : IAsyncRequest<User>
     {
         public string Name { get; set; }
         public string Email { get; set; }

@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Company.Domain.Models;
+using MediatR;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,16 +8,16 @@ using System.Threading.Tasks;
 
 namespace Company.Domain.Commands.CreateNewUser
 {
-    public class CreateNewUserHandler : IAsyncRequestHandler<CreateNewUserCommand, bool>
+    public class CreateNewUserHandler : IAsyncRequestHandler<CreateNewUserCommand, User>
     {
         public CreateNewUserHandler()
         {
         }
 
-
-        Task<bool> IAsyncRequestHandler<CreateNewUserCommand, bool>.Handle(CreateNewUserCommand message)
+        public Task<User> Handle(CreateNewUserCommand message)
         {
-            return Task.FromResult(true);
+            return Task.FromResult(new User());
         }
+
     }
 }

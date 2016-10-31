@@ -1,4 +1,5 @@
 ﻿using Company.Domain.Commands.CreateNewUser;
+using Company.Domain.Models;
 using FluentValidation;
 using MediatR;
 using System;
@@ -8,6 +9,7 @@ using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace Company.API.Controllers
 {
@@ -21,10 +23,30 @@ namespace Company.API.Controllers
         }
 
         // GET api/values
-        public async Task<bool> Get()
+        [ResponseType(typeof(User))]
+        public async Task<IHttpActionResult> Get()
         {
-            return await _mediator.SendAsync(new CreateNewUserCommand() { Email = "test@email.com" });
+            try
+            {
+                var user = await _mediator.SendAsync(new CreateNewUserCommand()
+                {
+                    Email = "test@email.com",
+                    Name = "andrew",
+                     Password="12345678"
+                });
+                return Json(user);
+
+            }
+            catch (UserAlreadyExistsException userAlreadyExistsException)
+            {
+                return Conflict();
+            }
+            catch (ValidationException ex)
+            {
+                return BadRequest();
+            }
+
         }
-        
+
     }
 }
